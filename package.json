@@ -1,0 +1,10 @@
+{
+  "name": "my-simulink",
+  "private": true,
+  "workspaces": [
+    "src/core/*"
+  ],
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

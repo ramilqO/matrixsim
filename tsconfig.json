@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@simulink/math-engine": ["src/core/math-engine/index.ts"],
+      "@simulink/standard-blocks": [
+        "src/core/standard-block-libraries/index.ts"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "**/dist"]
+}
