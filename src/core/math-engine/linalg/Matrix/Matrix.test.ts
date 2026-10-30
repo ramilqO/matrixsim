@@ -91,4 +91,56 @@ describe("Matrix", () => {
       );
     });
   });
+
+  describe("subtract", () => {
+    it("subtracts a scalar from every element without changing the original matrix", () => {
+      const matrix = new Matrix(2, 2, [
+        [5, 7],
+        [9, 11],
+      ]);
+
+      const result = matrix.subtract(2);
+
+      expect(result).toBeInstanceOf(Matrix);
+      expect(result.data).toEqual([
+        [3, 5],
+        [7, 9],
+      ]);
+      expect(matrix.data).toEqual([
+        [5, 7],
+        [9, 11],
+      ]);
+    });
+
+    it("subtracts two matrices element by element", () => {
+      const matrix = new Matrix(2, 2, [
+        [5, 8],
+        [3, 1],
+      ]);
+      const other = new Matrix(2, 2, [
+        [2, 1],
+        [4, 0],
+      ]);
+
+      const result = matrix.subtract(other);
+
+      expect(result).toBeInstanceOf(Matrix);
+      expect(result.data).toEqual([
+        [3, 7],
+        [-1, 1],
+      ]);
+    });
+
+    it("rejects matrices with different dimensions", () => {
+      const matrix = new Matrix(2, 2, [
+        [1, 2],
+        [3, 4],
+      ]);
+      const other = new Matrix(1, 2, [[5, 6]]);
+
+      expect(() => matrix.subtract(other)).toThrow(
+        "Matrix dimensions must match for subtraction.",
+      );
+    });
+  });
 });

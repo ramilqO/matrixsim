@@ -31,6 +31,7 @@ export class Matrix implements IMatrix {
           resultData[i].push(element + other);
         });
       });
+
       return new Matrix(this.rows, this.cols, resultData);
     }
 
@@ -48,14 +49,39 @@ export class Matrix implements IMatrix {
     return new Matrix(this.rows, this.cols, resultData);
   }
 
-
   subtract(other: IMatrix | number): IMatrix {
-    // Временная заглушка, возвращающая копию текущей матрицы
-    return new Matrix(this.rows, this.cols, this.data);
+    const resultData: number[][] = [];
+
+    if (typeof other === "number") {
+      this.data.forEach((row, i) => {
+        resultData.push([]);
+
+        row.forEach((element) => {
+          resultData[i].push(element - other);
+        });
+      });
+
+      return new Matrix(this.rows, this.cols, resultData);
+    }
+
+    if (this.rows !== other.rows || this.cols !== other.cols) {
+      throw new Error("Matrix dimensions must match for subtraction.");
+    }
+
+    this.data.forEach((row, i) => {
+      resultData.push([]);
+      
+      row.forEach((element, j) => {
+        resultData[i].push(element - other.data[i][j]);
+      });
+    });
+
+    return new Matrix(this.rows, this.cols, resultData);
   }
 
   multiply(other: IMatrix | number): IMatrix {
-    // Временная заглушка, возвращающая копию текущей матрицы
+
+
     return new Matrix(this.rows, this.cols, this.data);
   }
 
