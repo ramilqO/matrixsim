@@ -1,11 +1,5 @@
 import { IMatrix } from "./Matrix.type";
 
-/**
- * The service for mathematical calculations on matrices.
- *
- * @remarks
- * This class is part of the `math-engine` core
- */
 export class Matrix implements IMatrix {
   constructor(
     public rows: number,
@@ -16,6 +10,10 @@ export class Matrix implements IMatrix {
       throw new Error("Matrix dimensions must be positive integers.");
     }
 
+    if (!(rows && cols && data)) {
+      throw new Error("Invalid matrix dimensions or data.");
+    }
+
     if (data.length !== rows || data.some((row) => row.length !== cols)) {
       throw new Error(
         "Data dimensions do not match specified rows and columns.",
@@ -24,35 +22,60 @@ export class Matrix implements IMatrix {
   }
 
   add(other: IMatrix | number): IMatrix {
-    // Implementation for adding matrices or a scalar
-    return new Matrix(this.rows, this.cols, this.data);
+    const resultData: number[][] = [];
+
+    if (typeof other === "number") {
+      this.data.forEach((row, i) => {
+        resultData.push([]);
+        row.forEach((element) => {
+          resultData[i].push(element + other);
+        });
+      });
+      return new Matrix(this.rows, this.cols, resultData);
+    }
+
+    if (this.rows !== other.rows || this.cols !== other.cols) {
+      throw new Error("Matrix dimensions must match for addition.");
+    }
+
+    this.data.forEach((row, i) => {
+      resultData.push([]);
+      row.forEach((element, j) => {
+        resultData[i].push(element + other.data[i][j]);
+      });
+    });
+
+    return new Matrix(this.rows, this.cols, resultData);
   }
 
+
   subtract(other: IMatrix | number): IMatrix {
-    // Implementation for subtracting matrices or a scalar
+    // Временная заглушка, возвращающая копию текущей матрицы
     return new Matrix(this.rows, this.cols, this.data);
   }
 
   multiply(other: IMatrix | number): IMatrix {
-    // Implementation for multiplying matrices or a scalar
+    // Временная заглушка, возвращающая копию текущей матрицы
     return new Matrix(this.rows, this.cols, this.data);
   }
 
   divide(other: IMatrix | number): IMatrix {
-    // Implementation for dividing matrices or a scalar
+    // Временная заглушка, возвращающая копию текущей матрицы
     return new Matrix(this.rows, this.cols, this.data);
   }
 
   transpose(): IMatrix {
-    // Implementation for transposing the matrix
-    return new Matrix(this.cols, this.rows, this.data);
+    // Временная заглушка, возвращающая копию текущей матрицы
+    return new Matrix(this.rows, this.cols, this.data);
   }
 
   determinant(): number {
-    // Implementation for calculating the determinant
+    // Временная заглушка для скалярного значения
     return 0;
   }
+
   inverse(): IMatrix {
+    // Временная заглушка, возвращающая копию текущей матрицы
     return new Matrix(this.rows, this.cols, this.data);
   }
 }
