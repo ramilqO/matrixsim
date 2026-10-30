@@ -70,7 +70,7 @@ export class Matrix implements IMatrix {
 
     this.data.forEach((row, i) => {
       resultData.push([]);
-      
+
       row.forEach((element, j) => {
         resultData[i].push(element - other.data[i][j]);
       });
@@ -80,9 +80,29 @@ export class Matrix implements IMatrix {
   }
 
   multiply(other: IMatrix | number): IMatrix {
+    const resultData: number[][] = [];
 
+    if (typeof other === "number") {
+      this.data.forEach((row, i) => {
+        resultData.push([]);
 
-    return new Matrix(this.rows, this.cols, this.data);
+        row.forEach((element) => {
+          resultData[i].push(element * other);
+        });
+      });
+
+      return new Matrix(this.rows, this.cols, resultData);
+    }
+
+    this.data.forEach((row, i) => {
+      resultData.push([]);
+
+      row.forEach((element, j) => {
+        resultData[i].push(element * other.data[i][j]);
+      });
+    });
+
+    return new Matrix(this.rows, this.cols, resultData);
   }
 
   divide(other: IMatrix | number): IMatrix {

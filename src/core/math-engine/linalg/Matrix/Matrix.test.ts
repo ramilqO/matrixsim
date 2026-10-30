@@ -143,4 +143,44 @@ describe("Matrix", () => {
       );
     });
   });
+
+  describe("multiply", () => {
+    it("multiplies every element by a scalar without changing the original matrix", () => {
+      const matrix = new Matrix(2, 2, [
+        [1, 2],
+        [3, 4],
+      ]);
+
+      const result = matrix.multiply(3);
+
+      expect(result).toBeInstanceOf(Matrix);
+      expect(result.data).toEqual([
+        [3, 6],
+        [9, 12],
+      ]);
+      expect(matrix.data).toEqual([
+        [1, 2],
+        [3, 4],
+      ]);
+    });
+
+    it("multiplies two matrices element by element", () => {
+      const matrix = new Matrix(2, 2, [
+        [1, 2],
+        [3, 4],
+      ]);
+      const other = new Matrix(2, 2, [
+        [2, 0],
+        [1, 2],
+      ]);
+
+      const result = matrix.multiply(other);
+
+      expect(result).toBeInstanceOf(Matrix);
+      expect(result.data).toEqual([
+        [2, 0],
+        [3, 8],
+      ]);
+    });
+  });
 });
