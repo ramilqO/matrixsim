@@ -1,10 +1,16 @@
 {
   "name": "my-simulink",
   "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "bench": "vitest bench"
+  },
   "workspaces": [
     "src/core/*"
   ],
   "devDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^5.0.5"
   }
 }
