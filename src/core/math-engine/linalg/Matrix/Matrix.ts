@@ -10,11 +10,11 @@ export class Matrix implements IMatrix {
       throw new Error("Matrix dimensions must be positive integers.");
     }
 
-    if (!(rows && cols && data)) {
-      throw new Error("Invalid matrix dimensions or data.");
-    }
-
-    if (data.length !== rows || data.some((row) => row.length !== cols)) {
+    if (
+      !data ||
+      data.length !== rows ||
+      data.some((row) => row.length !== cols)
+    ) {
       throw new Error(
         "Data dimensions do not match specified rows and columns.",
       );
@@ -55,7 +55,6 @@ export class Matrix implements IMatrix {
     if (typeof other === "number") {
       this.data.forEach((row, i) => {
         resultData.push([]);
-
         row.forEach((element) => {
           resultData[i].push(element - other);
         });
@@ -70,7 +69,6 @@ export class Matrix implements IMatrix {
 
     this.data.forEach((row, i) => {
       resultData.push([]);
-
       row.forEach((element, j) => {
         resultData[i].push(element - other.data[i][j]);
       });
@@ -80,43 +78,48 @@ export class Matrix implements IMatrix {
   }
 
   multiply(other: IMatrix | number): IMatrix {
-    const resultData: number[][] = [];
-
     if (typeof other === "number") {
-      this.data.forEach((row, i) => {
-        resultData.push([]);
-
-        row.forEach((element) => {
-          resultData[i].push(element * other);
-        });
-      });
-
+      const resultData = this.data.map((row) =>
+        row.map((element) => element * other),
+      );
       return new Matrix(this.rows, this.cols, resultData);
     }
 
-    // Добавлена проверка размеров
-    if (this.rows !== other.rows || this.cols !== other.cols) {
-      throw new Error("Matrix dimensions must match for multiplication.");
+    // 2. Классическое матричное умножение (строка на столбец)
+    if (this.cols !== other.rows) {
+      throw new Error(
+        "Columns of the first matrix must match rows of the second matrix for multiplication.",
+      );
     }
 
-    this.data.forEach((row, i) => {
-      resultData.push([]);
+    const resultRows = this.rows;
+    const resultCols = other.cols;
+    const resultData: number[][] = Array.from({ length: resultRows }, () =>
+      Array(resultCols).fill(0),
+    );
 
-      row.forEach((element, j) => {
-        resultData[i].push(element * other.data[i][j]);
-      });
-    });
+    for (let i = 0; i < resultRows; i++) {
+      for (let j = 0; j < resultCols; j++) {
+        let sum = 0;
+        for (let k = 0; k < this.cols; k++) {
+          sum += this.data[i][k] * other.data[k][j];
+        }
+        resultData[i][j] = sum;
+      }
+    }
 
-    return new Matrix(this.rows, this.cols, resultData);
+    return new Matrix(resultRows, resultCols, resultData);
   }
 
   divide(other: IMatrix | number): IMatrix {
     const resultData: number[][] = [];
 
     if (typeof other === "number") {
+      if (other === 0) {
+        throw new Error("Division by zero encountered in matrix division.");
+      }
       this.data.forEach((row, i) => {
         resultData.push([]);
-
         row.forEach((element) => {
           resultData[i].push(element / other);
         });
@@ -131,12 +134,10 @@ export class Matrix implements IMatrix {
 
     this.data.forEach((row, i) => {
       resultData.push([]);
-
       row.forEach((element, j) => {
         if (other.data[i][j] === 0) {
           throw new Error("Division by zero encountered in matrix division.");
         }
-
         resultData[i].push(element / other.data[i][j]);
       });
     });
@@ -188,13 +189,9 @@ export class Matrix implements IMatrix {
       );
     }
 
-    if (n > 3) {
-      throw new Error(
-        "Determinant calculation for matrices larger than 3x3 is not implemented.",
-      );
-    }
-
-    return 0;
+    throw new Error(
+      "Determinant calculation for matrices larger than 3x3 is not implemented.",
+    );
   }
 
   inverse(): IMatrix {
