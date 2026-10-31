@@ -1,4 +1,4 @@
-import { Vector } from "../../linalg/Vector/Vector"; // Укажи правильный путь к Vector
+import { Vector } from "../../linalg/Vector/Vector";
 
 /**
  * Represents a derivative function for the Euler solver: f(t, x) = dx/dt.
