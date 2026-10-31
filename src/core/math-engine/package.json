@@ -1,5 +1,5 @@
 {
-  "name": "@my-simulink/math-engine",
+  "name": "@matrixsim/math-engine",
   "version": "0.1.0",
   "private": true,
   "main": "index.ts",

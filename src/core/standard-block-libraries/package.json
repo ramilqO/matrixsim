@@ -5,6 +5,6 @@
   "main": "index.ts",
   "types": "index.ts",
   "dependencies": {
-    "@my-simulink/math-engine": "workspace:*"
+    "@matrixsim/math-engine": "workspace:*"
   }
 }
