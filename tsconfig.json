@@ -14,10 +14,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@simulink/math-engine": ["src/core/math-engine/index.ts"],
-      "@simulink/standard-blocks": [
-        "src/core/standard-block-libraries/index.ts"
-      ]
+      "@matrixsim/math-engine": ["src/core/math-engine/index.ts"],
+      "@matrixsim/sbl": ["src/core/standard-block-libraries/index.ts"]
     }
   },
   "exclude": ["node_modules", "**/dist"]

@@ -1,5 +1,5 @@
 {
-  "name": "@my-simulink/standard-blocks",
+  "name": "@matrixsim/sbl",
   "version": "0.1.0",
   "private": true,
   "main": "index.ts",
